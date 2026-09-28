@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C1E4B62-9A34-4F1D-8E20-5B7A6C2D9F31}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TingYu.Manager</RootNamespace>
+    <AssemblyName>TingYu.Manager</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+    <OutputPath>bin\$(Configuration)\net48\</OutputPath>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <!--
+      x86 不是偏好，是硬约束。管理器要从玩家自己的 Terraria 安装里读乐器贴图，
+      而那批 XNB 是 LZX 压缩的，机器上唯一能解压它的东西就是 XNA 自带的
+      ContentManager，而 XNA 只有 32 位程序集——64 位进程根本加载不了它。
+      Terraria 本体也是 x86。
+    -->
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConfigView.cs" />
+    <Compile Include="MainForm.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SpriteStore.cs" />
+    <Compile Include="UiSmokeTest.cs" />
+    <Compile Include="UiTheme.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TingYu.Core\TingYu.Core.csproj">
+      <Project>{6C1F0E5A-7A21-4C6E-9E7B-2E1B7A9C4101}</Project>
+      <Name>TingYu.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TingYu.Patcher\TingYu.Patcher.csproj">
+      <Project>{6C1F0E5A-7A21-4C6E-9E7B-2E1B7A9C4102}</Project>
+      <Name>TingYu.Patcher</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

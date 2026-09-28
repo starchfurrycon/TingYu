@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C1F0E5A-7A21-4C6E-9E7B-2E1B7A9C4103}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TingYu.Plugin</RootNamespace>
+    <AssemblyName>TingYu.Plugin</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+    <DebugType>portable</DebugType>
+    <OutputPath>bin\$(Configuration)\net48\</OutputPath>
+    <!--
+      x86 是硬要求：这个 DLL 被注入进 Terraria.exe，而 Terraria 是 32 位进程，
+      64 位的程序集加载不进去。AnyCPU 在 32 位宿主里也一样能跑，但明确成 x86
+      可以避免任何人把它当库在 64 位进程里引用。
+    -->
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TingYu.Core\TingYu.Core.csproj">
+      <Project>{6C1F0E5A-7A21-4C6E-9E7B-2E1B7A9C4101}</Project>
+      <Name>TingYu.Core</Name>
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Diagnostics.cs" />
+    <Compile Include="GameFacade.cs" />
+    <Compile Include="Hotkey.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionRequirements.cs" />
+    <Compile Include="Runtime.cs" />
+    <Compile Include="ScoreLibrary.cs" />
+    <Compile Include="Takeover.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

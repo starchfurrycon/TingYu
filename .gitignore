@@ -1,0 +1,19 @@
+﻿# 本机构建产物与外部引用（不入库）
+bin/
+obj/
+lib/
+build/
+*.user
+*.suo
+.vs/
+_recon/
+tmp/
+
+# 运行时产物：日志与状态文件在游戏目录里生成，若被复制过来不要提交
+TingYu/
+*.log
+status.txt
+
+# 编辑器
+.vscode/
+.idea/

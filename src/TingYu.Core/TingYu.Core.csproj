@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C1F0E5A-7A21-4C6E-9E7B-2E1B7A9C4101}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TingYu.Core</RootNamespace>
+    <AssemblyName>TingYu.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+    <DebugType>portable</DebugType>
+    <OutputPath>bin\$(Configuration)\net48\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\AudioClip.cs" />
+    <Compile Include="Audio\AudioDecoder.cs" />
+    <Compile Include="Audio\Fft.cs" />
+    <Compile Include="Audio\MelodyTranscriber.cs" />
+    <Compile Include="Audio\PitchDetector.cs" />
+    <Compile Include="Audio\SpectralFlux.cs" />
+    <Compile Include="BuiltInSongs.cs" />
+    <Compile Include="InstrumentModel.cs" />
+    <Compile Include="InstrumentScore.cs" />
+    <Compile Include="MusicFolder.cs" />
+    <Compile Include="NoteNames.cs" />
+    <Compile Include="Performance.cs" />
+    <Compile Include="PitchAxis.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
