@@ -23,8 +23,13 @@ $patcher = Join-Path $here 'TingYu.Patcher.exe'
 if (-not (Test-Path -LiteralPath $patcher)) { throw "找不到 TingYu.Patcher.exe，请确认本脚本与载荷放在同一目录。" }
 
 # 正在运行的游戏会锁住 Terraria.exe，必须先关掉，否则改动会写到一半失败。
+# 提示里带上进程路径：机器上可能同时开着别的 Terraria 实例（例如其它工具的探针），
+# 只说「请退出游戏」会让人对着没开的游戏窗口发愣。
 $running = Get-Process -Name 'Terraria' -ErrorAction SilentlyContinue
-if ($running) { throw "Terraria 正在运行，请先退出游戏再安装。" }
+if ($running) {
+    $where = ($running | ForEach-Object { $_.Path }) -join "`n  "
+    throw "检测到正在运行的 Terraria 进程，请先退出再安装：`n  $where"
+}
 
 $arguments = @('install', '--payload', $here)
 if ($TerrariaDir) { $arguments += @('--terraria', (Join-Path $TerrariaDir 'Terraria.exe')) }

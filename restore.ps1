@@ -20,7 +20,10 @@ $patcher = Join-Path $here 'TingYu.Patcher.exe'
 if (-not (Test-Path -LiteralPath $patcher)) { throw "找不到 TingYu.Patcher.exe，请确认本脚本与载荷放在同一目录。" }
 
 $running = Get-Process -Name 'Terraria' -ErrorAction SilentlyContinue
-if ($running) { throw "Terraria 正在运行，请先退出游戏再还原。" }
+if ($running) {
+    $where = ($running | ForEach-Object { $_.Path }) -join "`n  "
+    throw "检测到正在运行的 Terraria 进程，请先退出再还原：`n  $where"
+}
 
 $arguments = @('restore', '--payload', $here)
 if ($TerrariaDir) { $arguments += @('--terraria', (Join-Path $TerrariaDir 'Terraria.exe')) }
