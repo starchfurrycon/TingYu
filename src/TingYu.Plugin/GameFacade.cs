@@ -551,7 +551,9 @@ namespace TingYu.Plugin
             if (soundId != 0)
             {
                 PlaySound(soundId, PlayerCenter(player));
-                SendPitch(player, musicPitch);
+                // 单音乐器同步的是 `musicPitch`，拨弦乐器同步的是归一化距离——
+                // 与原版一致（竖琴/铃铛发 num9，吉他与鼓发 num12 / num15 / num20）。
+                SendPitch(player, soundId == 26 || soundId == 35 ? musicPitch : normalizedDistance);
             }
 
             var notify = Find("Terraria.GameContent.Achievements.AchievementsHelper", "NotifyProgressionEvent") as MethodInfo;

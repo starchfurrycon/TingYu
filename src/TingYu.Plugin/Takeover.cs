@@ -357,7 +357,7 @@ namespace TingYu.Plugin
             switch (command.Action)
             {
                 case PerformanceAction.Strike:
-                    Strike(command, axis);
+                    Strike(command);
                     break;
                 case PerformanceAction.Finish:
                     Release(ReleaseReason.Finished, null);
@@ -426,13 +426,14 @@ namespace TingYu.Plugin
         /// 发声走原版同一套（`SoundEngine.PlaySound`、`PlayGuitarChord`、
         /// `NetMessage.SendData(58)`），但**不移动光标、不伪造鼠标按键**。
         /// </summary>
-        private void Strike(PerformanceCommand command, float axis)
+        private void Strike(PerformanceCommand command)
         {
             var player = _game.LocalPlayer;
             if (player == null) return;
 
-            var normalized = axis <= 0f ? 1f : Math.Min(command.PixelDistance / (axis / 2f), 1f);
-            var half = axis <= 0f ? 1f : axis / 2f;
+            var normalized = command.NormalizedDistance;
+            if (normalized < 0f) normalized = 0f;
+            if (normalized > 1f) normalized = 1f;
 
             try
             {
@@ -473,13 +474,18 @@ namespace TingYu.Plugin
             // 轴长单独用 DescribeAxis 展开。轴长为 0 时，它旁边的那些数字（像素 0.0、
             // 归一化 1.0000）全都失去意义，所以必须把「这个轴长是怎么来的」一起写下来——
             // 否则只能看到「所有音都是同一个音高」这种没有指向性的现象。
+            //
+            // 拨弦乐器没有 musicPitch，发的是和弦，日志里改成写档位与归一化距离，
+            // 否则会拿一个对该乐器无意义的数字去和单音乐器对照。
+            var pitchField = _instrument.Kind == TingYu.Core.InstrumentModel.SoundKind.Chord
+                ? "和弦档 " + TingYu.Core.InstrumentModel.ChordBucketForStep(command.Step)
+                : "musicPitch " + command.MusicPitch.ToString("0.0000", CultureInfo.InvariantCulture);
             _log.Verbose_("发音 #" + _struckTicks + " 级数 " + command.Step +
                           " · 目标音 " + NoteNames.FromMidi(command.Midi) +
                           " · 像素 " + command.PixelDistance.ToString("0.0", CultureInfo.InvariantCulture) +
                           " · 归一化 " + normalized.ToString("0.0000", CultureInfo.InvariantCulture) +
-                          " · musicPitch " + command.MusicPitch.ToString("0.0000", CultureInfo.InvariantCulture) +
+                          " · " + pitchField +
                           " · " + _game.DescribeAxis());
-            _ = half;
         }
 
         /// <summary>CU：`Player.Update` 刚把输入复制进 `Main`。当前不需要做任何事。</summary>
