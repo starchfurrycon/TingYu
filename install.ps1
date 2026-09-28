@@ -5,7 +5,7 @@
 #      CLR 在启动阶段只会在 exe 所在目录和 GAC 里找注入目标程序集，
 #      放到子目录会直接让游戏以 0xE0434352 崩溃退出。
 #   2. 调用 TingYu.Patcher 修改 Terraria.exe，把四个钩子挂进去。
-#   3. 原文件会被备份成 Terraria.exe.tingyu-backup，restore.ps1 靠它完整还原。
+#   3. 原文件会被备份到游戏目录下的 TingYu\Terraria.exe.orig，restore.ps1 靠它完整还原。
 #
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File install.ps1

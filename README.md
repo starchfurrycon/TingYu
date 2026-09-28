@@ -37,7 +37,7 @@ Terraria.exe  SHA-256 960A03BFF6050CF7BE16DFC1A7B19E10FC2C4F8F835A6A3B135A50DD9E
 
 1. 退出游戏。
 2. 解压发行包，双击 `install.ps1`（或右键「使用 PowerShell 运行」）。
-3. 安装脚本会先把 `Terraria.exe` 备份成 `Terraria.exe.tingyu-backup`，再写入钩子。
+3. 安装脚本会先把 `Terraria.exe` 备份到 `TingYu\Terraria.exe.orig`，再写入钩子。
 
 如果游戏装在非默认位置，用参数指定：
 
@@ -81,8 +81,8 @@ powershell -ExecutionPolicy Bypass -File install.ps1 -TerrariaDir "D:\Steam\stea
 
 ## 还原
 
-双击 `restore.ps1`。它会从备份还原 `Terraria.exe`，并删掉复制进游戏目录的两个 DLL，
-恢复到安装前的状态。
+双击 `restore.ps1`。它会从 `TingYu\Terraria.exe.orig` 还原本体、删掉复制进游戏目录的两个 DLL
+并移除数据目录，`Terraria.exe` 会逐字节回到原版（可用哈希核对：`960A03BF…`）。
 
 ## 从源码构建
 

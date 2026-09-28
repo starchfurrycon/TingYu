@@ -1,7 +1,8 @@
 ﻿# 听雨的声音 —— 一键还原
 #
-# 把游戏恢复到安装前的状态：从 Terraria.exe.tingyu-backup 还原本体，
-# 并删掉复制进游戏目录的 TingYu.Plugin.dll 与 TingYu.Core.dll。
+# 把游戏恢复到安装前的状态：从 TingYu\Terraria.exe.orig 还原本体，
+# 删掉复制进游戏目录的 TingYu.Plugin.dll 与 TingYu.Core.dll，并移除数据目录。
+# 还原后 Terraria.exe 与原版逐字节一致（可用哈希核对：960A03BF…）。
 #
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File restore.ps1
